@@ -1,0 +1,20 @@
+function openYouTube() {
+    // 1. Open a new window at about:blank
+    var win = window.open('about:blank', '_blank');
+
+    // 2. Define the YouTube URL (use /embed/ for better results)
+    var url = "https://www.youtube.com";
+
+    // 3. Create an iframe and style it to fill the entire window
+    var iframe = win.document.createElement('iframe');
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+    iframe.style.position = "fixed";
+    iframe.style.top = "0";
+    iframe.style.left = "0";
+    
+    // 4. Set the source and append it to the new window
+    iframe.src = url;
+    win.document.body.appendChild(iframe);
+}
