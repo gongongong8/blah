@@ -1,48 +1,29 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>YouTube About:Blank Loader</title>
-    <style>
-        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #121212; color: white; }
-        button { padding: 15px 30px; font-size: 18px; cursor: pointer; border-radius: 8px; border: none; background: #ff0000; color: white; font-weight: bold; }
-        button:hover { background: #cc0000; }
-    </style>
-</head>
-<body>
-    <h1>Open YouTube in about:blank</h1>
-    <p>Click the button below to launch the video.</p>
+function launchVideo(videoId) {
+    var win = window.open('about:blank', '_blank');
+    var doc = win.document;
     
-    <!-- Replace VIDEO_ID with your actual YouTube video ID -->
-    <button onclick="launchVideo('dQw4w9WgXcQ')">Launch Video</button>
-
-    <script>
-        function launchVideo(videoId) {
-            var win = window.open('about:blank', '_blank');
-            var doc = win.document;
-            
-            // This HTML will be written into the about:blank page
-            var html = `
-                <html>
-                <head>
-                    <title>YouTube Player</title>
-                    <style>
-                        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
-                        iframe { width: 100%; height: 100%; border: none; }
-                    </style>
-                </head>
-                <body>
-                    <iframe src="https://www.youtube.com/embed/${videoId}" 
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                            allowfullscreen>
-                    </iframe>
-                </body>
-                </html>
-            `;
-            
-            doc.open();
-            doc.write(html);
-            doc.close();
-        }
-    </script>
-</body>
-</html>
+    var html = `
+        <html>
+        <head>
+            <title>YouTube Player</title>
+            <!-- Critical: Tells YouTube where the request is coming from -->
+            <meta name="referrer" content="no-referrer-when-downgrade">
+            <style>
+                body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
+                iframe { width: 100%; height: 100%; border: none; }
+            </style>
+        </head>
+        <body>
+            <iframe src="https://www.youtube-nocookie.com{videoId}" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+            </iframe>
+        </body>
+        </html>
+    `;
+    
+    doc.open();
+    doc.write(html);
+    doc.close();
+}
