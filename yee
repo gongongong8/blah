@@ -1,20 +1,48 @@
-function openYouTube() {
-    // 1. Open a new window at about:blank
-    var win = window.open('about:blank', '_blank');
-
-    // 2. Define the YouTube URL (use /embed/ for better results)
-    var url = "https://www.youtube.com";
-
-    // 3. Create an iframe and style it to fill the entire window
-    var iframe = win.document.createElement('iframe');
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "none";
-    iframe.style.position = "fixed";
-    iframe.style.top = "0";
-    iframe.style.left = "0";
+<!DOCTYPE html>
+<html>
+<head>
+    <title>YouTube About:Blank Loader</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #121212; color: white; }
+        button { padding: 15px 30px; font-size: 18px; cursor: pointer; border-radius: 8px; border: none; background: #ff0000; color: white; font-weight: bold; }
+        button:hover { background: #cc0000; }
+    </style>
+</head>
+<body>
+    <h1>Open YouTube in about:blank</h1>
+    <p>Click the button below to launch the video.</p>
     
-    // 4. Set the source and append it to the new window
-    iframe.src = url;
-    win.document.body.appendChild(iframe);
-}
+    <!-- Replace VIDEO_ID with your actual YouTube video ID -->
+    <button onclick="launchVideo('dQw4w9WgXcQ')">Launch Video</button>
+
+    <script>
+        function launchVideo(videoId) {
+            var win = window.open('about:blank', '_blank');
+            var doc = win.document;
+            
+            // This HTML will be written into the about:blank page
+            var html = `
+                <html>
+                <head>
+                    <title>YouTube Player</title>
+                    <style>
+                        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
+                        iframe { width: 100%; height: 100%; border: none; }
+                    </style>
+                </head>
+                <body>
+                    <iframe src="https://www.youtube.com/embed/${videoId}" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </body>
+                </html>
+            `;
+            
+            doc.open();
+            doc.write(html);
+            doc.close();
+        }
+    </script>
+</body>
+</html>
