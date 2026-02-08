@@ -1,29 +1,49 @@
-function launchVideo(videoId) {
-    var win = window.open('about:blank', '_blank');
-    var doc = win.document;
-    
-    var html = `
-        <html>
-        <head>
-            <title>YouTube Player</title>
-            <!-- Critical: Tells YouTube where the request is coming from -->
-            <meta name="referrer" content="no-referrer-when-downgrade">
-            <style>
-                body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
-                iframe { width: 100%; height: 100%; border: none; }
-            </style>
-        </head>
-        <body>
-            <iframe src="https://www.youtube-nocookie.com{videoId}" 
-                    referrerpolicy="strict-origin-when-cross-origin"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                    allowfullscreen>
-            </iframe>
-        </body>
-        </html>
-    `;
-    
-    doc.open();
-    doc.write(html);
-    doc.close();
-}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My About:Blank Site</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; padding-top: 50px; background-color: #121212; color: white; }
+        button { padding: 15px 30px; font-size: 18px; cursor: pointer; border-radius: 8px; border: none; background: #ff0000; color: white; font-weight: bold; }
+        button:hover { background: #cc0000; }
+    </style>
+</head>
+<body>
+    <h1>Launch YouTube Player</h1>
+    <button onclick="launchAboutBlank()">Open in about:blank</button>
+
+    <script>
+        function launchAboutBlank() {
+            var win = window.open('about:blank', '_blank');
+            var doc = win.document;
+            
+            // The "Home" feel is achieved by loading the Trending playlist
+            // Raw youtube.com will ALWAYS error in an iframe.
+            var ytUrl = "https://www.youtube-nocookie.com";
+
+            var html = `
+                <html>
+                <head>
+                    <title>YouTube</title>
+                    <meta name="referrer" content="no-referrer-when-downgrade">
+                    <style>
+                        body, html { margin: 0; padding: 0; height: 100%; overflow: hidden; background: #000; }
+                        iframe { width: 100%; height: 100%; border: none; }
+                    </style>
+                </head>
+                <body>
+                    <iframe src="${ytUrl}" 
+                            referrerpolicy="strict-origin-when-cross-origin"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                    </iframe>
+                </body>
+                </html>
+            `;
+            doc.open();
+            doc.write(html);
+            doc.close();
+        }
+    </script>
+</body>
+</html>
